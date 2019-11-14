@@ -32,7 +32,6 @@ module.exports = async ({ page, browser, today, args }) => {
 
         }, args);
         logger.info("Page text defined.");  
-        console.log(text);
         
     } catch(err){
         return logger.error(`Error parsing page text. `, err);
