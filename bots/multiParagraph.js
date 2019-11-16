@@ -1,5 +1,5 @@
-const getData = require("../mongodb/getData");
-const uploadNewData = require("../mongodb/uploadNewData");
+const find = require("../mongodb/find");
+const updateOne = require("../mongodb/updateOne");
 const sendText = require("../texter");
 const mongoose = require("mongoose");
 const logger = require("../logger");
@@ -38,7 +38,7 @@ module.exports = async ({ page, browser, today, args }) => {
     }
 
     try {
-        var dbData = await getData(args.schema);
+        var dbData = await find(args.schema);
         var dbText = dbData[0].text;
         var isNew = dbText !== text;
     } catch(err) {
@@ -47,7 +47,7 @@ module.exports = async ({ page, browser, today, args }) => {
 
     try {
         if(isNew){
-            await uploadNewData(text, args.schema);
+            await updateOne(text, args.schema);
             logger.info(`Text updated successfully.`)
         }
     } catch (err) {

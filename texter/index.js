@@ -19,7 +19,7 @@ module.exports = async ({ title, oldString, newString }) => {
        return message;
 
     } catch (err) {
-        logger.error('Error processing text', err);
+        logger.error('Error processing text ', err);
     }
 };
 
