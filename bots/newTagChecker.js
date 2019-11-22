@@ -4,7 +4,7 @@ const logger = require("../logger");
 const mongoose = require("mongoose");
 const insertMany = require("../mongodb/insertMany");
 
-module.exports = async ({ page, email, args }) => {
+module.exports = async ({ page, emails, args }) => {
 
     try {
         var db = await mongoose.connect("mongodb://localhost:27017/resources", { useNewUrlParser: true, useUnifiedTopology: true });
@@ -49,7 +49,7 @@ module.exports = async ({ page, email, args }) => {
 
     try {
         if(newData.length > 0){
-            let sent = await mailer({ emails: [email], text: { link: args.link, new: newData.map(x => x.text) }, mailDuringDevelopment: true });
+            let sent = await mailer({ emails: args.emails, subject: args.subject, text: { link: args.link, new: newData.map(x => x.text) }, mailDuringDevelopment: true });
             logger.info("Email sent! ", JSON.stringify(sent));
         };
     } catch(err){

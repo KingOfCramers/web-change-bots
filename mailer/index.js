@@ -15,7 +15,7 @@ var transporter = nodemailer.createTransport({
     }
   });
 
-module.exports = async ({ emails, text, mailDuringDevelopment  }) => {
+module.exports = async ({ emails, text, mailDuringDevelopment, subject  }) => {
     if(process.env.NODE_ENV === 'development' && !mailDuringDevelopment)
         return Promise.resolve("Not mailing in dev server...")
 
@@ -23,7 +23,7 @@ module.exports = async ({ emails, text, mailDuringDevelopment  }) => {
         let HelperOptions = {
             from: '<hcramer@nationaljournal.com>',
             to: email,
-            subject: "Hearings",
+            subject,
             text: JSON.stringify(text, null, 2)
         };
         return transporter.sendMail(HelperOptions);
