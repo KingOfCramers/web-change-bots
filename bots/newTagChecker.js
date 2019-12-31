@@ -5,9 +5,10 @@ const mongoose = require("mongoose");
 const insertMany = require("../mongodb/insertMany");
 
 module.exports = async ({ page, emails, args }) => {
-
     try {
-        var db = await mongoose.connect("mongodb://localhost:27017/resources", { useNewUrlParser: true, useUnifiedTopology: true });
+      let uri = "mongodb://localhost:27017/web_checker?authSource=admin";
+      let options =  { useNewUrlParser: true, useUnifiedTopology: true, keepAlive: true,  user: "admin", pass: process.env.MONGO_PASS };
+      let db = await mongoose.connect(uri, options);
     } catch(err){
         return logger.error(`Could not connect to database. `, err);
     };

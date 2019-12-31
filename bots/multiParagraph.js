@@ -6,10 +6,11 @@ const logger = require("../logger");
 
 module.exports = async ({ page, browser, today, args }) => {
     logger.info(`Checking minaChang at ${today.format("llll")}`);
-
+    
     try {
-        var db = await mongoose.connect('mongodb://localhost:27017/resources', { useNewUrlParser: true, useUnifiedTopology: true });
-        logger.info("Database connected.");
+      let uri = "mongodb://localhost:27017/multi_paragraph?authSource=admin";
+      let options =  { useNewUrlParser: true, useUnifiedTopology: true, keepAlive: true,  user: "admin", pass: process.env.MONGO_PASS };
+      let db = await mongoose.connect(uri, options);
     } catch(err){
         return logger.error(`Could not connect to database. `, err);
     };

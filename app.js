@@ -17,7 +17,7 @@ const { MinaChangSchema, SpecialElectionSchema } = require("./mongodb/schemas");
 // Run program...
 if(process.env.NODE_ENV === 'production'){
     logger.info(`Starting up bots in ${process.env.NODE_ENV} at ${moment().format("llll")}`);
-    cron.schedule('* * * * *', async () => {
+    cron.schedule('*/15 * * * *', async () => {
         try {
             let { today, browser, page } = await setUpPuppeteer();
             logger.info(`Running 15-min programs at ${today.format("llll")}`);
@@ -25,7 +25,7 @@ if(process.env.NODE_ENV === 'production'){
             await launchBots({ page, browser, today, 
                 bots: [
                     // { bot: multiParagraph, args: { query: "div.entry-content p", link: 'https://www.state.gov/biographies/mina-chang/', schema: MinaChangSchema } },
-                    { bot: newTagChecker, args: { subject: 'New Special Election Dates', emails: [process.env.EMAIL], schema: SpecialElectionSchema, link: 'https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/', getElementById: "2019-20-special-elections", querySelectorAll: "div.rich-text > ul > li" }}
+                    { bot: newTagChecker, args: { subject: 'New Special Election Dates', emails: [process.env.EMAIL, process.env.EMAIL2], schema: SpecialElectionSchema, link: 'https://www.fec.gov/help-candidates-and-committees/dates-and-deadlines/', getElementById: "2019-20-special-elections", querySelectorAll: "div.rich-text > ul > li" }}
                 ]
             }); // Launch bots in production...
 
